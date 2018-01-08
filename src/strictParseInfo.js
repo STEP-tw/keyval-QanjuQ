@@ -17,17 +17,27 @@ var StrictParseInfo=function(initialParsingFunction,validKeys,caseSensitivity) {
 StrictParseInfo.prototype=Object.create(ParseInfo.prototype);
 
 StrictParseInfo.prototype.pushKeyValuePair=function() {
-  let currentKey = this.changeKeyToLowerCase() || this.currentKey;
-  if(!contains(this.validKeys,currentKey))
+  let currentKey = this.changeKeysToLowerCase([this.currentKey])[0];
+  // currentKey = currentKey[0];
+  let validKeys = this.changeKeysToLowerCase(this.validKeys);
+  if(!contains(validKeys,currentKey))
   throw new InvalidKeyError("invalid key",this.currentKey,this.currentPos);
   this.parsedKeys[this.currentKey]=this.currentValue;
   this.resetKeysAndValues();
 }
 
-StrictParseInfo.prototype.changeKeyToLowerCase = function(){
-  if(!this.caseSensitive){
-    return this.currentKey.toLowerCase();
-  }
+StrictParseInfo.prototype.changeKeysToLowerCase = function(keys){
+  let isCaseSensitive = this.caseSensitive;
+  return keys.map((key) =>{
+    if(!isCaseSensitive){
+      return changeToLowerCase(key);
+    }
+    return key;
+  });
+};
+
+const changeToLowerCase = function(key){
+    return key.toLowerCase();
 };
 
 module.exports=StrictParseInfo;
