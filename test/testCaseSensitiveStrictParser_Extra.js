@@ -66,7 +66,7 @@ describe("strict parser that is case insensitive extra",function(){
   });
 });
 
-describe.skip("strict parser that is case sensitive",function(){
+describe("strict parser that is case sensitive",function(){
   it("should throw error when specified keys are in lower case and actual is not",function(){
     let kvParser=new StrictParser(["name"],true);
     // true indicates that parser is case sensitive
