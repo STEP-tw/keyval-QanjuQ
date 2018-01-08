@@ -1,6 +1,8 @@
 const src=function(filePath){return "../src/"+filePath};
 const errors=function(filePath){return "../src/errors/"+filePath};
 
+const chai = require('chai');
+
 const assert=require('assert');
 const Parser=require(src('index.js')).Parser;
 const MissingValueError=require(errors('missingValueError.js'));
@@ -18,39 +20,39 @@ describe("parse basic key values",function(){
 
   it("parses an empty string",function(){
     let actual=kvParser.parse("");
-    assert.equal(0,actual.length());
+    chai.assert.equal(0,actual.length());
   });
 
   it("parse key=value",function(){
     let actual=kvParser.parse("key=value");
-    assert.equal("value",actual.key);
-    assert.equal(1,actual.length());
+    chai.assert.equal("value",actual.key);
+    chai.assert.equal(1,actual.length());
   });
 
   it("parse when there are leading spaces before key",function(){
     let actual=kvParser.parse(" key=value");
     let expected = {'key':'value'};
-    assert.deepEqual(expected,kvParser.parse(" key=value"));
+    chai.expect(actual).to.own.include(expected);
   });
 
   it("parse when there are spaces after key",function(){
     let expected={key:"value"};
-    assert.deepEqual(expected,kvParser.parse("key =value"));
+    chai.expect(kvParser.parse("key =value")).to.own.include(expected);
   });
 
   it("parse when there are spaces before and after key",function(){
     let expected={key:"value"};
-    assert.deepEqual(expected,kvParser.parse(" key =value"));
+    chai.expect(kvParser.parse(" key =value")).to.own.include(expected);
   });
 
   it("parse when there are spaces before value",function(){
     let expected={key:"value"};
-    assert.deepEqual(expected,kvParser.parse("key= value"));
+    chai.expect(kvParser.parse("key= value")).to.own.include(expected);
   });
 
   it("parse when there are spaces after value",function(){
     let expected={key:"value"};
-    assert.deepEqual(expected,kvParser.parse("key=value "));
+    chai.expect(kvParser.parse("key=value ")).to.own.include(expected);
   });
 });
 
