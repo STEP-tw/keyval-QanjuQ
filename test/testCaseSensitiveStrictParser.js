@@ -13,6 +13,14 @@ describe("strict parser that is case insensitive",function(){
     let parsed=kvParser.parse("NAME=jayanth");
     assert.deepEqual(parsed,expected);
   });
+
+  it("should parse when keys has some letters in uppercase but actual is not",function(){
+    let kvParser=new StrictParser(["name"],false);
+    let expected=new Parsed();
+    expected["Name"]="jayanth";
+    let parsed=kvParser.parse("Name=jayanth");
+    assert.deepEqual(parsed,expected);
+  })
 });
 
 describe("strict parser that is case sensitive",function(){
