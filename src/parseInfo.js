@@ -3,7 +3,7 @@ const MissingValueError=require("./errors/missingValueError.js");
 const MissingEndQuoteError=require("./errors/missingEndQuoteError.js");
 const IncompleteKeyValuePairError=require("./errors/incompleteKeyValuePairError.js");
 
-var ParseInfo=function(initialParsingFunction) {
+var ParseInfo=function(initialParsingFunction,caseSensitive) {
     this.currentToken="";
     this.currentKey="";
     this.currentValue="";
@@ -45,6 +45,8 @@ ParseInfo.prototype.endOfText=function() {
       throw new MissingValueError(this.currentKey,this.currentPos);
   }
 }
+
+
 
 
 ParseInfo.prototype.parsed=function() {
