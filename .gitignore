@@ -1,5 +1,1 @@
 node_modules/
-run_tests.sh
-.gitignore
-package-lock.json
-package.json
